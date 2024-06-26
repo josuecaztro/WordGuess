@@ -8,5 +8,5 @@ package com.github.zipcodewilmington;
  */
 public class Hangman {
 
-    //hello Zipcoders!
+    //hello my Name is Josue!
 }
