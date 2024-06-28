@@ -24,10 +24,10 @@ public class Hangman {
             }
         }
     }
-    public static void printCurrentState(ArrayList<String> list, int total) {
+    public static void printCurrentState(ArrayList<String> list, int total, int total2) {
+        System.out.println("Current guesses: " + total2);
         System.out.println(list);
         System.out.println("You have " + total + " tries left.");
-        System.out.println("Enter a single character:");
     }
 
 
@@ -54,7 +54,6 @@ public static void main (String[] args) {
     //choose a random word from this array
     Random random = new Random();
     String randomWord = words[random.nextInt(words.length)];
-    System.out.println(randomWord);
     //find how many letters are in the random word
     int sizeOfRandomWord = randomWord.length();
     //declare that you get x amount of tries from the amount of letters in step above
@@ -70,14 +69,21 @@ public static void main (String[] args) {
         userGuessesArray.add("_");
     }
 
+    int userTries = 0;
+
 
     //first prompt to begin game - PRINT CURRENT STATE
 //    public static void printCurrentState() {
 //        System.out.println("You have " + triesAllowed + " tries left.");
 //        System.out.println("Enter a single character:");
-        printCurrentState(userGuessesArray, triesAllowed);
+        printCurrentState(userGuessesArray, triesAllowed, userTries);
         char userGuess = scanner.next().charAt(0);
         process(userGuess, secretWordArray, userGuessesArray);
+        userTries++;
+        triesAllowed--;
+        printCurrentState(userGuessesArray, triesAllowed, userTries);
+    System.out.println("Enter a single character:");
+
 //    }
 
     //logic to test if inputChar is included in randomWord (BASICALLY THE PROCESS METHOD)
@@ -91,7 +97,6 @@ public static void main (String[] args) {
     //now empty array will look like __a_
 
 
-    System.out.println(userGuessesArray);
 
 
 
@@ -114,26 +119,26 @@ public static void main (String[] args) {
 
     //set a while loop (while number of tries < tries allowed) AND
     //the player has not guessed the word...
-    int userTries = 0;
     boolean wordGuessed = false;
     //if there is no _ in the array that means you guessed the word
-    while ((userTries < sizeOfRandomWord - 1) && wordGuessed == false){
+    while ((userTries < sizeOfRandomWord) && wordGuessed == false){
         userTries++;
         triesAllowed--;
-        System.out.println("You have " + triesAllowed + " tries left.");
-        System.out.println("Current guesses: " + userTries);
-        System.out.println("Make a new guess?");
+//        System.out.println("You have " + triesAllowed + " tries left.");
+//        System.out.println("Current guesses: " + userTries);
+//        System.out.println("Make a new guess?");
         char newUserGuess = scanner.next().charAt(0);
         process(newUserGuess, secretWordArray, userGuessesArray);
-        printCurrentState(userGuessesArray, triesAllowed);
+        printCurrentState(userGuessesArray, triesAllowed, userTries);
+        System.out.println("Enter a single character:");
     }
-    if (!userGuessesArray.contains("_")){
+    if (!userGuessesArray.contains("_")){ //RIGHT NOW THIS DOESN'T WORK
         wordGuessed = true;
     }
     if (wordGuessed == true){
         System.out.println("Congrats, you guessed it!!! You win!!!");
     }
-    if (userTries == sizeOfRandomWord - 1 && wordGuessed == false){
+    if ((userTries == sizeOfRandomWord) && wordGuessed == false){
         System.out.println("Sorry, you are OUT of turns! You lose.");
     }
 
