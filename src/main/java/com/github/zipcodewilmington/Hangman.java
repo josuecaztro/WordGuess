@@ -34,23 +34,12 @@ public class Hangman {
 
 
 public static void main (String[] args) {
-
-
-
     Scanner scanner = new Scanner(System.in);
-
-    //hello my Name is Josue!
-
-    //try to keep your methods small
-    //if methods get too big, break them up into smaller pieces with other methods
-    //DO GIT COMMITS ALONG THE WAY!!!
-
     //FOR VERSION 1 OF YOUR GAME
     //start the game
     System.out.println("Let's play WordGuess - Version 1.0");
-
     //make an array of words
-    String[] words = {"apple", "banana", "orange", "strawberry"};
+    String[] words = {"apple", "banana", "orange", "berry", "grape"};
     //choose a random word from this array
     Random random = new Random();
     String randomWord = words[random.nextInt(words.length)];
@@ -60,8 +49,8 @@ public static void main (String[] args) {
     int triesAllowed = sizeOfRandomWord;
     //set up a solution array
     char[] secretWordArray = randomWord.toCharArray();
-    //this sout here is to just check that the char array works. seems like it does
-    System.out.println(Arrays.toString(secretWordArray));
+    //this out print here is to just check that the char array works. seems like it does
+//    System.out.println(Arrays.toString(secretWordArray));
 
     //set up an empty guesses array that the user will guess chars into
     ArrayList<String> userGuessesArray = new ArrayList<String>();
@@ -70,19 +59,19 @@ public static void main (String[] args) {
     }
 
     int userTries = 0;
-
-
+    boolean wordGuessed = false;
     //first prompt to begin game - PRINT CURRENT STATE
 //    public static void printCurrentState() {
 //        System.out.println("You have " + triesAllowed + " tries left.");
 //        System.out.println("Enter a single character:");
         printCurrentState(userGuessesArray, triesAllowed, userTries);
-        char userGuess = scanner.next().charAt(0);
-        process(userGuess, secretWordArray, userGuessesArray);
-        userTries++;
-        triesAllowed--;
-        printCurrentState(userGuessesArray, triesAllowed, userTries);
-    System.out.println("Enter a single character:");
+
+//        char userGuess = scanner.next().charAt(0);
+//        process(userGuess, secretWordArray, userGuessesArray);
+//        userTries++;
+//        triesAllowed--;
+//        printCurrentState(userGuessesArray, triesAllowed, userTries);
+//    System.out.println("Enter a single character:");
 
 //    }
 
@@ -97,29 +86,8 @@ public static void main (String[] args) {
     //now empty array will look like __a_
 
 
-
-
-
-
-
-    //EXAMPLE: (if they guess a)
-    // indices      0   1   2
-    // randoWord    c   a   t
-    //guessesArray  _   a   _
-
-
-
-
-
-
-
-
-
-
-
     //set a while loop (while number of tries < tries allowed) AND
     //the player has not guessed the word...
-    boolean wordGuessed = false;
     //if there is no _ in the array that means you guessed the word
     while ((userTries < sizeOfRandomWord) && wordGuessed == false){
         userTries++;
@@ -130,28 +98,28 @@ public static void main (String[] args) {
         char newUserGuess = scanner.next().charAt(0);
         process(newUserGuess, secretWordArray, userGuessesArray);
         printCurrentState(userGuessesArray, triesAllowed, userTries);
-        System.out.println("Enter a single character:");
-    }
-    if (!userGuessesArray.contains("_")){ //RIGHT NOW THIS DOESN'T WORK
-        wordGuessed = true;
-    }
-    if (wordGuessed == true){
-        System.out.println("Congrats, you guessed it!!! You win!!!");
-    }
-    if ((userTries == sizeOfRandomWord) && wordGuessed == false){
-        System.out.println("Sorry, you are OUT of turns! You lose.");
+        if (!(userTries > 0)) {
+            System.out.println("Enter a single character:");
+        }
+        if (!userGuessesArray.contains("_")){ //RIGHT NOW THIS DOESN'T WORK
+            wordGuessed = true;
+        }
     }
 
+    if (wordGuessed == true){
+        System.out.println("***************");
+        System.out.println("Congrats, you guessed it!!! You win!!!");
+        System.out.println("***************");
+    }
+    if ((userTries == sizeOfRandomWord) && wordGuessed == false){
+        System.out.println("---------------");
+        System.out.println("Sorry, you are OUT of turns! You lose.");
+        System.out.println("---------------");
+    }
     //print current state of player guesses, ask player for a new guess, if char = "-", quit the game,
     //ELSE process the letter
     //if the letter makes the word complete - PLAYER WINS
     //after this while loop - if the word is not guessed - player loses.
-
-
-
-
-
-
 
     /*
     VERSION 2: add a while (true) conditional wrapped around the whole game code
