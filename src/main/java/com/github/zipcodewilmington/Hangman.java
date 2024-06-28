@@ -30,8 +30,17 @@ public class Hangman {
         System.out.println("You have " + total + " tries left.");
     }
 
+    public static void playerWon(){
+        System.out.println("***************");
+        System.out.println("Congrats, you guessed it!!! You win!!!");
+        System.out.println("***************");
+    }
 
-
+    public static void playerLost(){
+        System.out.println("---------------");
+        System.out.println("Sorry, you are OUT of turns! You lose.");
+        System.out.println("---------------");
+    }
 
 public static void main (String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -108,27 +117,17 @@ public static void main (String[] args) {
                 wordGuessed = true;
             }
         }
-
         if (wordGuessed == true) {
-            System.out.println("***************");
-            System.out.println("Congrats, you guessed it!!! You win!!!");
-            System.out.println("***************");
+            playerWon();
         }
         if ((userTries == sizeOfRandomWord) && wordGuessed == false) {
-            System.out.println("---------------");
-            System.out.println("Sorry, you are OUT of turns! You lose.");
-            System.out.println("---------------");
+           playerLost();
         }
-        //print current state of player guesses, ask player for a new guess, if char = "-", quit the game,
-        //ELSE process the letter
-        //if the letter makes the word complete - PLAYER WINS
-        //after this while loop - if the word is not guessed - player loses.
 
     /*
     VERSION 2: add a while (true) conditional wrapped around the whole game code
      that won't start unless they say Y/N to play again
      */
-
         System.out.println("Play Again?");
         System.out.println("1. Yes, play again.");
         System.out.println("2. No, quit.");
