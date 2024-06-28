@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class Hangman {
 
-    public static void processInputChar(char guess, char[] arr, ArrayList<String> list){
+    public static void process(char guess, char[] arr, ArrayList<String> list){
         int specialIndex;
         for (int i = 0; i < arr.length; i++){ //solved an error here, had to make it < not <=
             if (guess == arr[i]){
@@ -24,8 +24,19 @@ public class Hangman {
             }
         }
     }
+    public static void printCurrentState(ArrayList<String> list, int total) {
+        System.out.println(list);
+        System.out.println("You have " + total + " tries left.");
+        System.out.println("Enter a single character:");
+    }
+
+
+
 
 public static void main (String[] args) {
+
+
+
     Scanner scanner = new Scanner(System.in);
 
     //hello my Name is Josue!
@@ -36,7 +47,7 @@ public static void main (String[] args) {
 
     //FOR VERSION 1 OF YOUR GAME
     //start the game
-    System.out.println("Let's play Wordguess version 1.0");
+    System.out.println("Let's play WordGuess - Version 1.0");
 
     //make an array of words
     String[] words = {"apple", "banana", "orange", "strawberry"};
@@ -58,16 +69,18 @@ public static void main (String[] args) {
     for (int i = 0; i <= sizeOfRandomWord - 1; i++){
         userGuessesArray.add("_");
     }
-    System.out.println(userGuessesArray);
 
 
-    //first prompt to begin game
-    System.out.println("You have " + triesAllowed + " tries left.");
-    System.out.println("Enter a single character:");
-    char userGuess = scanner.next().charAt(0);
-    processInputChar(userGuess, secretWordArray, userGuessesArray);
+    //first prompt to begin game - PRINT CURRENT STATE
+//    public static void printCurrentState() {
+//        System.out.println("You have " + triesAllowed + " tries left.");
+//        System.out.println("Enter a single character:");
+        printCurrentState(userGuessesArray, triesAllowed);
+        char userGuess = scanner.next().charAt(0);
+        process(userGuess, secretWordArray, userGuessesArray);
+//    }
 
-    //logic to test if inputChar is included in randomWord
+    //logic to test if inputChar is included in randomWord (BASICALLY THE PROCESS METHOD)
     // ..... down below ....
     //get input character
     //loop through the random word string
@@ -77,16 +90,6 @@ public static void main (String[] args) {
     //and replace it with the user input character
     //now empty array will look like __a_
 
-//    int specialIndex;
-//    for (int i = 0; i < secretWordArray.length; i++){ //solved an error here, had to make it < not <=
-//        if (userGuess == secretWordArray[i]){
-//            specialIndex = i; //remember indexes start at zero! (but this finds index we need)
-//            userGuessesArray.remove(specialIndex);
-//            userGuessesArray.add(specialIndex, String.valueOf(userGuess));
-//        } else {
-////            System.out.println("Not found in array.");
-//        }
-//    }
 
     System.out.println(userGuessesArray);
 
@@ -113,16 +116,27 @@ public static void main (String[] args) {
     //the player has not guessed the word...
     int userTries = 0;
     boolean wordGuessed = false;
-    while ((userTries < triesAllowed) && wordGuessed == false){
+    //if there is no _ in the array that means you guessed the word
+    while ((userTries < sizeOfRandomWord - 1) && wordGuessed == false){
         userTries++;
         triesAllowed--;
         System.out.println("You have " + triesAllowed + " tries left.");
         System.out.println("Current guesses: " + userTries);
         System.out.println("Make a new guess?");
         char newUserGuess = scanner.next().charAt(0);
-        processInputChar(newUserGuess, secretWordArray, userGuessesArray);
-        System.out.println(userGuessesArray);
+        process(newUserGuess, secretWordArray, userGuessesArray);
+        printCurrentState(userGuessesArray, triesAllowed);
     }
+    if (!userGuessesArray.contains("_")){
+        wordGuessed = true;
+    }
+    if (wordGuessed == true){
+        System.out.println("Congrats, you guessed it!!! You win!!!");
+    }
+    if (userTries == sizeOfRandomWord - 1 && wordGuessed == false){
+        System.out.println("Sorry, you are OUT of turns! You lose.");
+    }
+
     //print current state of player guesses, ask player for a new guess, if char = "-", quit the game,
     //ELSE process the letter
     //if the letter makes the word complete - PLAYER WINS
