@@ -1,4 +1,5 @@
 package com.github.zipcodewilmington;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -36,23 +37,62 @@ public static void main (String[] args) {
     //set up a solution array
     char[] secretWordArray = randomWord.toCharArray();
     //this sout here is to just check that the char array works. seems like it does
-//    System.out.println(Arrays.toString(secretWordArray));
+    System.out.println(Arrays.toString(secretWordArray));
+
     //set up an empty guesses array that the user will guess chars into
-    String[] userGuessesArray = {"_", "_", "_", "_"};
-
-
-
-
-    //logic to test if inputChar is included in randomWord
-    for (int i = 0; i < sizeOfRandomWord; i++){
-        System.out.println(randomWord.indexOf(i));
+    ArrayList<String> userGuessesArray = new ArrayList<String>();
+    for (int i = 0; i <= sizeOfRandomWord - 1; i++){
+        userGuessesArray.add("_");
     }
+    System.out.println(userGuessesArray);
 
 
     //first prompt to begin game
     System.out.println("You have " + triesAllowed + " tries left.");
     System.out.println("Enter a single character:");
     char userGuess = scanner.next().charAt(0);
+
+
+    //logic to test if inputChar is included in randomWord
+    // ..... down below ....
+    //get input character
+    //loop through the random word string
+    //if (i) at any point is equal to the input character,
+    //find the index of that character in randomWord that matches with the input character
+    //and once you have that index number, remove the _ from that index of the emptyArray
+    //and replace it with the user input character
+    //now empty array will look like __a_
+    int specialIndex;
+    for (int i = 0; i <= secretWordArray.length; i++){
+        if (userGuess == secretWordArray[i]){
+            System.out.println("found it in array");
+            specialIndex = i; //remember indexes start at zero!
+            System.out.println(specialIndex);
+            userGuessesArray.remove(specialIndex);
+            userGuessesArray.add(specialIndex, String.valueOf(userGuess));
+            System.out.println("lets see how guesses array looks now: " + userGuessesArray);
+        } else {
+            System.out.println("Not found in array.");
+        }
+    }
+
+
+
+
+
+    //EXAMPLE: (if they guess a)
+    // indices      0   1   2
+    // randoWord    c   a   t
+    //guessesArray  _   a   _
+
+
+
+
+
+
+
+
+
 
 
     //set a while loop (while number of tries < tries allowed) AND
