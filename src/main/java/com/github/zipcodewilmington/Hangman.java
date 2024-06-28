@@ -11,6 +11,20 @@ import java.util.Scanner;
  * @date 5/27/21 11:02 AM
  */
 public class Hangman {
+
+    public static void processInputChar(char guess, char[] arr, ArrayList<String> list){
+        int specialIndex;
+        for (int i = 0; i < arr.length; i++){ //solved an error here, had to make it < not <=
+            if (guess == arr[i]){
+                specialIndex = i; //remember indexes start at zero! (but this finds index we need)
+                list.remove(specialIndex);
+                list.add(specialIndex, String.valueOf(guess));
+            } else {
+//            System.out.println("Not found in array.");
+            }
+        }
+    }
+
 public static void main (String[] args) {
     Scanner scanner = new Scanner(System.in);
 
@@ -51,7 +65,7 @@ public static void main (String[] args) {
     System.out.println("You have " + triesAllowed + " tries left.");
     System.out.println("Enter a single character:");
     char userGuess = scanner.next().charAt(0);
-
+    processInputChar(userGuess, secretWordArray, userGuessesArray);
 
     //logic to test if inputChar is included in randomWord
     // ..... down below ....
@@ -62,19 +76,19 @@ public static void main (String[] args) {
     //and once you have that index number, remove the _ from that index of the emptyArray
     //and replace it with the user input character
     //now empty array will look like __a_
-    int specialIndex;
-    for (int i = 0; i <= secretWordArray.length; i++){
-        if (userGuess == secretWordArray[i]){
-            System.out.println("found it in array");
-            specialIndex = i; //remember indexes start at zero!
-            System.out.println(specialIndex);
-            userGuessesArray.remove(specialIndex);
-            userGuessesArray.add(specialIndex, String.valueOf(userGuess));
-            System.out.println("lets see how guesses array looks now: " + userGuessesArray);
-        } else {
-            System.out.println("Not found in array.");
-        }
-    }
+
+//    int specialIndex;
+//    for (int i = 0; i < secretWordArray.length; i++){ //solved an error here, had to make it < not <=
+//        if (userGuess == secretWordArray[i]){
+//            specialIndex = i; //remember indexes start at zero! (but this finds index we need)
+//            userGuessesArray.remove(specialIndex);
+//            userGuessesArray.add(specialIndex, String.valueOf(userGuess));
+//        } else {
+////            System.out.println("Not found in array.");
+//        }
+//    }
+
+    System.out.println(userGuessesArray);
 
 
 
@@ -106,6 +120,8 @@ public static void main (String[] args) {
         System.out.println("Current guesses: " + userTries);
         System.out.println("Make a new guess?");
         char newUserGuess = scanner.next().charAt(0);
+        processInputChar(newUserGuess, secretWordArray, userGuessesArray);
+        System.out.println(userGuessesArray);
     }
     //print current state of player guesses, ask player for a new guess, if char = "-", quit the game,
     //ELSE process the letter
